@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.WindowManager
 import android.widget.*
+import com.example.memorygame.Variable.btnBack
+import com.example.memorygame.Variable.btnRestart
 import com.example.memorygame.Variable.buttons
 import com.example.memorygame.Variable.card1
 import com.example.memorygame.Variable.card10
@@ -40,6 +42,8 @@ class GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         tvTimer = findViewById(R.id.tvTimer)
+        btnRestart = findViewById(R.id.btnRestart)
+        btnBack = findViewById(R.id.btnBack)
         startTimer()
 
          card1 = findViewById(R.id.card1)
@@ -59,11 +63,18 @@ class GameActivity : AppCompatActivity() {
          card15 = findViewById(R.id.card15)
          card16 = findViewById(R.id.card16)
 
-       val btnRestart = findViewById<Button>(R.id.btnRestart)
         btnRestart.setOnClickListener {
             Toast.makeText(this,"Tap board to reset game!", Toast.LENGTH_SHORT).show()
             restartGame()
         }
+
+        btnBack.setOnClickListener {
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
+            timer?.cancel()
+            finish()
+        }
+
 
         images.addAll(images)
         images.shuffle()
@@ -90,10 +101,10 @@ class GameActivity : AppCompatActivity() {
             }
             override fun onFinish() {
                 Toast.makeText(this@GameActivity, "GAME OVER", Toast.LENGTH_LONG).show()
-                val sendIntent = Intent(this@GameActivity, GameOverActivity::class.java)
-                sendIntent.putExtra("moves", tvMovesResult)
-                sendIntent.putExtra("remainingTime", timeLeftInMillis)
-                startActivity(sendIntent)
+                val intent = Intent(this@GameActivity, GameOverActivity::class.java)
+                intent.putExtra("moves", tvMovesResult)
+                intent.putExtra("remainingTime", timeLeftInMillis)
+                startActivity(intent)
                 finish()
             }
         }.start()
@@ -189,10 +200,10 @@ class GameActivity : AppCompatActivity() {
             cards[position1].isMatched = true
             cards[position2].isMatched = true
             if (tvResult == 8) {
-                val sendIntent = Intent(this, GameOverActivity::class.java)
-                sendIntent.putExtra("moves", tvMovesResult)
-                sendIntent.putExtra("remainingTime", timeLeftInMillis)
-                startActivity(sendIntent)
+                val intent = Intent(this, GameOverActivity::class.java)
+                intent.putExtra("moves", tvMovesResult)
+                intent.putExtra("remainingTime", timeLeftInMillis)
+                startActivity(intent)
                 finish()
             }
 

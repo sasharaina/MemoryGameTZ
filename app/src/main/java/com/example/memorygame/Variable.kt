@@ -37,6 +37,8 @@ object Variable {
     lateinit var playBtn: Button
     lateinit var getJsonBtn: Button
     lateinit var exitBtn: Button
+    lateinit var btnBack: Button
+    lateinit var btnRestart: Button
     lateinit var tvMoves: TextView
     lateinit var tvRemainingTime: TextView
 }
